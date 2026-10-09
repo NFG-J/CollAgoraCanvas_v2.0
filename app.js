@@ -73,6 +73,36 @@
         { id: 'output', title: '5. Output', x: 1330, y: 240, width: 430, height: 320 },
         { id: 'references', title: '6. References — syntax with parameters, source/search string, contract & signature', x: 20, y: 580, width: 860, height: 260 },
         { id: 'reflection', title: '7. Reflection — comments', x: 900, y: 580, width: 860, height: 260 }
+      ],
+      items: [
+        {
+          type: 'sticky-note', sectionId: 'header', x: 40, y: 65, width: 820, height: 135, color: '#fff7a8', votes: 3,
+          text: 'Example — Function: VehicleAssignment (part of: Transport Booking)\nDesigned by: NFG\nProblem/background: assign the nearest vehicle to a booking.\nProgramming language: Python, Pandas'
+        },
+        {
+          type: 'sticky-note', sectionId: 'variable-list', x: 920, y: 65, width: 820, height: 135, color: '#fff7a8', votes: 3,
+          text: 'Example — Name (string): first + last name\nFromLocation (string): full address\nRegNr (string): vehicle registration number\nPosition (string): nearest full address\nDistance (integer): driving distance in metres — test: assert 1–5000'
+        },
+        {
+          type: 'sticky-note', sectionId: 'flowchart', x: 40, y: 285, width: 820, height: 255, color: '#fff7a8', votes: 3,
+          text: 'Example — 1) Read Booking and VehicleList tables (pandas DataFrames)\n2) Compare distances, pick the vehicle with the shortest Distance:\n   df2.loc[df2[\'Distance\'].idxmin()]\n3) Add the chosen RegNr to the booking row\n4) Build a TripList table from booking + vehicle'
+        },
+        {
+          type: 'sticky-note', sectionId: 'input', x: 920, y: 285, width: 370, height: 255, color: '#fff7a8', votes: 3,
+          text: 'Example —\n1. Booking: Name, FromLocation\n2. VehicleList: RegNr, Position\n3. Distance per vehicle (computed or looked up)\n4. (add/remove rows as needed)'
+        },
+        {
+          type: 'sticky-note', sectionId: 'output', x: 1350, y: 285, width: 390, height: 255, color: '#fff7a8', votes: 3,
+          text: 'Example —\nprint(trip_list)\n→ one row per booking with the assigned RegNr and vehicle details'
+        },
+        {
+          type: 'sticky-note', sectionId: 'references', x: 40, y: 625, width: 820, height: 195, color: '#fff7a8', votes: 3,
+          text: 'Example — pandas.DataFrame: pandas.pydata.org/docs\nDataFrame.idxmin(axis=0, skipna=True): pandas docs\nContract: input = two DataFrames → output = one merged DataFrame'
+        },
+        {
+          type: 'sticky-note', sectionId: 'reflection', x: 920, y: 625, width: 820, height: 195, color: '#fff7a8', votes: 3,
+          text: 'Example — This case is simplified; a real solution needs more attributes (order number, payment, etc.).\nDistance is mocked here instead of calling a maps API.\nPosition is static in this example; in reality it would update continuously (e.g. via GPS).'
+        }
       ]
     }
   ];
@@ -328,7 +358,7 @@
     state.templateId = template.templateId;
     state.canvas = { ...template.canvas };
     state.sections = template.sections.map((section) => ({ ...section }));
-    state.items = [];
+    state.items = (template.items || []).map((item) => ({ ...item, id: uid('note'), tags: [...(item.tags || [])] }));
     state.selectedItemId = null;
     dom.canvasSize.value = `${state.canvas.width}x${state.canvas.height}`;
     render();
