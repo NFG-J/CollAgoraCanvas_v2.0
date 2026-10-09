@@ -59,6 +59,21 @@
         { id: 'experiments', title: 'Experiments and learning', x: 20, y: 640, width: 860, height: 300 },
         { id: 'evidence', title: 'Evidence, metrics and next steps', x: 920, y: 640, width: 860, height: 300 }
       ]
+    },
+    {
+      templateId: 'function-designer',
+      title: 'Function Designer',
+      description: 'A structured worksheet for designing a single function or class before you write code: header/metadata, variable list, flowchart/algorithm, input, output, references and reflection. Adapted from a Work Breakdown Structure (WBS) function-design form.',
+      canvas: { width: 1800, height: 900 },
+      sections: [
+        { id: 'header', title: '1. Header — class/function, title, designer, problem, language', x: 20, y: 20, width: 860, height: 200 },
+        { id: 'variable-list', title: '2. Variable list — name, values/range & type, test', x: 900, y: 20, width: 860, height: 200 },
+        { id: 'flowchart', title: '3. Flowchart / algorithm — steps, symbols, syntax with your parameters, comments', x: 20, y: 240, width: 860, height: 320 },
+        { id: 'input', title: '4. Input — step by step', x: 900, y: 240, width: 410, height: 320 },
+        { id: 'output', title: '5. Output', x: 1330, y: 240, width: 430, height: 320 },
+        { id: 'references', title: '6. References — syntax with parameters, source/search string, contract & signature', x: 20, y: 580, width: 860, height: 260 },
+        { id: 'reflection', title: '7. Reflection — comments', x: 900, y: 580, width: 860, height: 260 }
+      ]
     }
   ];
 
@@ -299,6 +314,13 @@
       dom.templateSelect.appendChild(option);
     });
     dom.templateSelect.value = state.templateId;
+    updateTemplateDescription();
+  }
+
+  function updateTemplateDescription() {
+    if (!dom.templateDescription) return;
+    const template = builtInTemplates.find((candidate) => candidate.templateId === state.templateId);
+    dom.templateDescription.textContent = (template && template.description) || '';
   }
 
   function applyTemplate(templateId) {
@@ -311,6 +333,7 @@
     dom.canvasSize.value = `${state.canvas.width}x${state.canvas.height}`;
     render();
     resetHistory();
+    updateTemplateDescription();
   }
 
   function setCanvasSize(value) {
@@ -845,7 +868,7 @@
 
   function initDom() {
     [
-      'projectTitle', 'templateSelect', 'canvasSize', 'canvas', 'addNoteBtn', 'addLinkBtn', 'imageUpload',
+      'projectTitle', 'templateSelect', 'templateDescription', 'canvasSize', 'canvas', 'addNoteBtn', 'addLinkBtn', 'imageUpload',
       'saveLocalBtn', 'loadLocalBtn', 'clearCanvasBtn', 'exportJsonBtn', 'exportMarkdownBtn', 'exportPngBtn',
       'exportPdfBtn', 'importJsonInput', 'voteInput', 'colorInput', 'duplicateItemBtn', 'deleteItemBtn',
       'selectedInfo', 'addSectionBtn', 'exportTemplateBtn', 'undoBtn', 'redoBtn', 'aiPromptSelect',

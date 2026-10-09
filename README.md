@@ -5,7 +5,7 @@ CollAgora Canvas is a lightweight, local-first educational canvas tool for stude
 ## What v1.0 included
 
 - Browser-only HTML, CSS and vanilla JavaScript.
-- Built-in templates: Blank, Business Model Canvas, Lean Canvas, and Triple Bottom Line Co-creation Canvas.
+- Built-in templates: Blank, Business Model Canvas, Lean Canvas, Triple Bottom Line Co-creation Canvas, and Function Designer (a structured worksheet for designing a single function or class before coding — header, variable list, flowchart/algorithm, input, output, references, reflection).
 - Sticky notes with editable text, colour and 1-5 vote score.
 - Link/video cards with required short description.
 - Image cards with required alt text.

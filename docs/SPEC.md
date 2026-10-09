@@ -17,6 +17,7 @@ CollAgora Canvas v1.0 is a local-first educational MVP. It is not a real-time co
    - Business Model Canvas
    - Lean Canvas
    - Triple Bottom Line Co-creation Canvas
+   - Function Designer (structured worksheet for designing a function/class: header, variable list, flowchart/algorithm, input, output, references, reflection)
 4. Sticky notes with editable text, colour and 1-5 vote score.
 5. Images with required alt text.
 6. Link/video cards with short description.
