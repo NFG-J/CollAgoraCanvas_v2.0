@@ -102,3 +102,23 @@ AI is supported outside the app through JSON and Markdown export. Example prompt
 ```text
 You are helping us analyse a completed CollAgora Canvas. Group the ideas by theme, identify overlaps, suggest missing perspectives, and propose the three most realistic next experiments. Use vote scores, but do not rely only on them.
 ```
+
+## v2.0 additions
+
+v2.0 builds on the v1.0 MVP without breaking the v1.0 project JSON format:
+
+1. **Resizable notes and sections** - `width`/`height` on items and sections are now user-adjustable via a resize handle, not just fixed defaults. Existing v1.0 project files remain compatible; missing `width`/`height` fall back to the v1.0 defaults.
+2. **Undo/redo history** - an in-memory history stack (not persisted) snapshots `projectTitle`, `templateId`, `canvas`, `sections` and `items` after every committed change.
+3. **Fully offline PNG export** - `html2canvas` is vendored under `vendor/` instead of loaded from a CDN.
+4. **PDF export** - a new export path renders the canvas to PNG and embeds it in a single-page PDF via a locally vendored `jsPDF`.
+5. **Optional lightweight server for shared workshops** - `server/server.js` is explicitly optional. It serves the static app and relays the latest project JSON per "room" over WebSocket (last-write-wins). No accounts, no persistence to disk, no real-time operational-transform merging - still out of scope for v2.0.
+6. **AI prompt helpers** - the app can assemble a ready-to-paste prompt (instructions + Markdown/JSON export) and copy it to the clipboard, building directly on the v1.0 "AI-support principle" above.
+
+### Still explicitly outside v2.0
+
+1. True real-time collaborative editing with conflict resolution (CRDT/OT).
+2. User accounts, login or permissions for the shared-workshop server.
+3. A full drawing editor.
+4. Word export.
+5. AI agents running inside the app itself (prompt helpers only prepare text for external tools).
+6. A template marketplace.

@@ -1,4 +1,4 @@
-const { clampVote, formatMarkdownItem, builtInTemplates } = require('../app.js');
+const { clampVote, formatMarkdownItem, builtInTemplates, composeAiPrompt } = require('../app.js');
 
 describe('CollAgora Canvas utility functions', () => {
   test('clampVote keeps scores between 1 and 5', () => {
@@ -18,5 +18,19 @@ describe('CollAgora Canvas utility functions', () => {
     const ids = builtInTemplates.map((template) => template.templateId);
     expect(ids).toContain('lean-canvas');
     expect(ids).toContain('business-model-canvas');
+  });
+
+  test('composeAiPrompt embeds instructions and fenced Markdown data', () => {
+    const prompt = composeAiPrompt('theme-gap', 'markdown', '# Example\n\n- idea one');
+    expect(prompt).toContain('Group the ideas by theme');
+    expect(prompt).toContain('```markdown');
+    expect(prompt).toContain('- idea one');
+  });
+
+  test('composeAiPrompt embeds JSON data with a json fence and falls back for unknown templates', () => {
+    const prompt = composeAiPrompt('not-a-real-template', 'json', '{"a":1}');
+    expect(prompt).toContain('Group the ideas by theme');
+    expect(prompt).toContain('```json');
+    expect(prompt).toContain('{"a":1}');
   });
 });

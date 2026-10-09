@@ -4,7 +4,8 @@
   "description": "Local-first educational canvas tool with templates, sticky notes, voting, save/load and export.",
   "main": "app.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "server": "node server/server.js"
   },
   "keywords": [
     "canvas",
@@ -19,5 +20,8 @@
   "devDependencies": {
     "jest": "^29.7.0",
     "jsdom": "^24.1.1"
+  },
+  "dependencies": {
+    "ws": "^8.22.0"
   }
 }

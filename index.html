@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CollAgora Canvas v1.0</title>
   <link rel="stylesheet" href="styles.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
+  <script src="vendor/html2canvas.min.js" defer></script>
+  <script src="vendor/jspdf.umd.min.js" defer></script>
   <script src="app.js" defer></script>
 </head>
 <body>
@@ -46,6 +47,14 @@
       </section>
 
       <section>
+        <h2>History</h2>
+        <div class="button-row">
+          <button id="undoBtn" type="button" class="secondary" disabled>Undo</button>
+          <button id="redoBtn" type="button" class="secondary" disabled>Redo</button>
+        </div>
+      </section>
+
+      <section>
         <h2>Project</h2>
         <button id="saveLocalBtn" type="button">Save locally</button>
         <button id="loadLocalBtn" type="button">Load local</button>
@@ -59,6 +68,47 @@
         <input id="importJsonInput" type="file" accept="application/json,.json" />
         <button id="exportMarkdownBtn" type="button">Export Markdown</button>
         <button id="exportPngBtn" type="button">Export PNG</button>
+        <button id="exportPdfBtn" type="button">Export PDF</button>
+      </section>
+
+      <section>
+        <h2>AI prompt helper</h2>
+        <p class="muted">Builds a ready-to-paste prompt from your export.</p>
+        <label>
+          Prompt focus
+          <select id="aiPromptSelect">
+            <option value="theme-gap">Theme &amp; gap analysis</option>
+            <option value="prioritisation">Prioritisation &amp; next steps</option>
+            <option value="stakeholder-summary">Stakeholder summary</option>
+          </select>
+        </label>
+        <label>
+          Data format
+          <select id="aiFormatSelect">
+            <option value="markdown">Markdown</option>
+            <option value="json">JSON</option>
+          </select>
+        </label>
+        <button id="copyAiPromptBtn" type="button">Copy AI prompt</button>
+        <p id="aiPromptStatus" class="muted" aria-live="polite"></p>
+      </section>
+
+      <section>
+        <h2>Shared workshop (optional)</h2>
+        <p class="muted">Connect to the optional local server to sync with other devices.</p>
+        <label>
+          Server URL
+          <input id="shareServerUrl" type="text" value="ws://localhost:8787" />
+        </label>
+        <label>
+          Room code
+          <input id="shareRoomCode" type="text" value="workshop" />
+        </label>
+        <div class="button-row">
+          <button id="shareConnectBtn" type="button">Connect</button>
+          <button id="shareDisconnectBtn" type="button" class="secondary" disabled>Disconnect</button>
+        </div>
+        <p id="shareStatus" class="muted">Not connected.</p>
       </section>
 
       <section>
@@ -100,6 +150,7 @@
         <span class="item-score" title="Vote score">3</span>
       </div>
       <div class="item-content" contenteditable="true"></div>
+      <span class="resize-handle" aria-hidden="true"></span>
     </article>
   </template>
 
@@ -110,6 +161,7 @@
       </div>
       <a class="item-link" href="#" target="_blank" rel="noopener noreferrer"></a>
       <p class="item-alt"></p>
+      <span class="resize-handle" aria-hidden="true"></span>
     </article>
   </template>
 </body>

@@ -164,6 +164,8 @@ input[type="color"] { height: 2.6rem; padding: 0.2rem; }
   outline: none;
   white-space: pre-wrap;
   cursor: text;
+  overflow: auto;
+  height: 100%;
 }
 .item-actions { display: flex; justify-content: flex-end; margin-bottom: 0.35rem; }
 .item-score {
@@ -180,6 +182,26 @@ input[type="color"] { height: 2.6rem; padding: 0.2rem; }
 .item-link { font-weight: 800; color: var(--accent); word-break: break-word; }
 .item-alt { color: var(--muted); margin: 0.4rem 0 0; font-size: 0.85rem; }
 .image-card img { display: block; max-width: 230px; max-height: 170px; border-radius: 0.45rem; }
+
+.resize-handle {
+  position: absolute;
+  right: 2px;
+  bottom: 2px;
+  width: 14px;
+  height: 14px;
+  cursor: nwse-resize;
+  background: linear-gradient(135deg, transparent 50%, rgba(15, 23, 42, 0.45) 50%);
+  border-radius: 0 0 0.35rem 0;
+  touch-action: none;
+  z-index: 20;
+}
+
+.template-section .resize-handle {
+  background: linear-gradient(135deg, transparent 50%, rgba(29, 78, 216, 0.5) 50%);
+}
+
+.button-row { display: flex; gap: 0.5rem; }
+.button-row button { flex: 1; }
 
 @media (max-width: 920px) {
   .app-header, .app-shell { grid-template-columns: 1fr; }
