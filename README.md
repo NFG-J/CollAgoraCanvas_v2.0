@@ -41,6 +41,16 @@ node server/server.js 9000   # or pass a custom port
 
 Then, in the app's "Shared workshop" panel, set the Server URL (e.g. `ws://<host-ip>:8787`) and a Room code, and click Connect on each device. The server only keeps the latest project JSON for each room in memory - nothing is written to disk, and the app works fully offline without it.
 
+### Deploying the server (e.g. DigitalOcean App Platform)
+
+The server binds to `process.env.PORT` when it's set (falling back to `8787` for local/manual runs), so it works out of the box with PaaS hosts that inject a port, such as DigitalOcean App Platform, Heroku, Render, etc. A ready-made spec is included at `.do/app.yaml` (`http_port: 8080`, run command `npm start`).
+
+If you see a browser error like `ERR_SSL_VERSION_OR_CIPHER_MISMATCH` right after deploying: it almost always means the platform's edge/proxy (DigitalOcean's default `*.ondigitalocean.app` domains are served via Cloudflare, hence IPs like `162.159.x.x`) can't reach your app's HTTP port - usually because the app isn't listening on the port the platform expects. Check that:
+
+- The component's **HTTP Port** setting matches what the app actually binds to (`8080` with the default `.do/app.yaml`, since the server now reads `PORT` from the environment).
+- The **Run Command** is `npm start` (or `node server/server.js`), not left blank.
+- The latest deployment is actually "Active", not still building.
+
 ## Suggested Codex task
 
 > Improve CollAgora Canvas v1.0 while keeping it browser-only and local-first. Preserve JSON project compatibility. Add tests for save/load, note creation, voting and Markdown export before adding new features.

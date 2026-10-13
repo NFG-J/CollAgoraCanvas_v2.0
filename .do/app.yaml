@@ -1,0 +1,25 @@
+# DigitalOcean App Platform spec for the optional shared-workshop server.
+# Import with: doctl apps create --spec .do/app.yaml
+# (or paste this in the App Platform dashboard's "Edit App Spec" view)
+#
+# This deploys server/server.js, which serves the static app AND relays
+# live project updates over WebSocket for shared workshops. The core app
+# itself is local-first and works fully offline without any server.
+name: collagora-canvas-v2
+region: fra
+services:
+  - name: web
+    github:
+      repo: NFG-J/CollAgoraCanvas_v2.0
+      branch: main
+      deploy_on_push: true
+    build_command: npm install --omit=dev
+    run_command: npm start
+    environment_slug: node-js
+    instance_count: 1
+    instance_size_slug: apps-s-1vcpu-0.5gb
+    http_port: 8080
+    health_check:
+      http_path: /
+    routes:
+      - path: /

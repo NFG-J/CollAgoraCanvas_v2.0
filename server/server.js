@@ -125,7 +125,12 @@ function startServer(port = DEFAULT_PORT) {
 }
 
 if (require.main === module) {
-  const port = Number.parseInt(process.argv[2], 10) || DEFAULT_PORT;
+  // Platform hosts (e.g. DigitalOcean App Platform, Heroku) inject PORT and
+  // expect the process to bind to it; an explicit CLI argument still wins
+  // for local/manual runs, e.g. `node server/server.js 9000`.
+  const port = Number.parseInt(process.argv[2], 10)
+    || Number.parseInt(process.env.PORT, 10)
+    || DEFAULT_PORT;
   startServer(port);
 }
 
